@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SI — Signal Intelligence</title>
+<title>Ominous — Signal Intelligence</title>
 <style>
   :root{
     --black: #030308;
@@ -72,7 +72,208 @@
     white-space:nowrap;
   }
   .nav-cta:hover{ background: rgba(139,63,240,0.22); border-color: var(--purple-bright); }
-  .nav-links-wrap{ display:flex; align-items:center; gap:2.6rem; }
+  .nav-links-wrap{ display:flex; align-items:center; gap:1.2rem; }
+
+  .wallet-btn{
+    font-family: var(--mono);
+    font-size:0.78rem;
+    padding: 9px 18px;
+    border-radius:100px;
+    border: 1px solid rgba(47,125,255,0.5);
+    color: var(--white);
+    background: rgba(47,125,255,0.08);
+    cursor:pointer;
+    display:flex; align-items:center; gap:8px;
+    transition: all .25s;
+    white-space:nowrap;
+  }
+  .wallet-btn:hover{ background: rgba(47,125,255,0.22); border-color: var(--blue-bright); }
+  .wallet-btn .wdot{
+    width:7px; height:7px; border-radius:50%;
+    background: var(--gray);
+    flex-shrink:0;
+  }
+  .wallet-btn.connected .wdot{
+    background: #4ade80;
+    box-shadow: 0 0 8px 2px rgba(74,222,128,0.6);
+  }
+  .wallet-menu{
+    position:absolute;
+    top: calc(100% + 10px);
+    right:0;
+    background: var(--panel);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 200px;
+    display:none;
+    flex-direction:column;
+    gap:2px;
+    box-shadow: 0 12px 40px -8px rgba(0,0,0,0.6);
+    z-index:60;
+  }
+  .wallet-menu.open{ display:flex; }
+  .wallet-menu button{
+    background:none; border:none; color:var(--white);
+    text-align:left; font-size:0.82rem; font-family:var(--body);
+    padding:10px 12px; border-radius:8px; cursor:pointer;
+    transition: background .2s;
+  }
+  .wallet-menu button:hover{ background: rgba(255,255,255,0.06); }
+  .wallet-menu .addr-row{
+    padding:10px 12px; font-family:var(--mono); font-size:0.76rem; color:var(--gray);
+    border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:4px;
+  }
+  .wallet-wrap{ position:relative; }
+  @media (max-width: 480px){ .wallet-btn span.wlabel{ display:none; } }
+
+  /* ---------- WALLET PANEL SECTION ---------- */
+  .wallet-section{
+    position:relative;
+    padding: 90px 5vw 110px;
+    background: var(--panel);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .wallet-section .eyebrow{ color: var(--purple-bright); }
+  .wallet-section .eyebrow::before{ background: var(--purple-bright); }
+  .wallet-section h2{
+    font-family:var(--disp); font-weight:600;
+    font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+    margin-bottom: 40px;
+  }
+  .wallet-locked{
+    padding: 50px 30px;
+    text-align:center;
+    color: var(--gray);
+    border: 1px dashed rgba(255,255,255,0.15);
+    border-radius: 16px;
+  }
+  .wallet-locked button{
+    margin-top:18px;
+    font-family:var(--body); font-weight:600; font-size:0.9rem;
+    padding: 12px 26px; border-radius:100px;
+    background: linear-gradient(100deg, var(--purple), #5c1fc4);
+    color:white; border:none; cursor:pointer;
+  }
+  .wp-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 22px;
+  }
+  @media (max-width: 940px){ .wp-grid{ grid-template-columns: 1fr; } }
+  .wp-card{
+    background: linear-gradient(160deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .wp-card h3{
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--gray); margin-bottom:18px;
+  }
+  .balance-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 12px 0; border-bottom:1px solid rgba(255,255,255,0.06);
+    font-size:0.9rem;
+  }
+  .balance-row:last-child{ border-bottom:none; }
+  .balance-row .sym{ color:var(--white); font-weight:600; }
+  .balance-row .amt{ font-family:var(--mono); color:var(--blue-bright); }
+
+  .wp-field{ margin-bottom:14px; }
+  .wp-field label{ display:block; font-size:0.76rem; color:var(--gray); margin-bottom:6px; }
+  .wp-field input, .wp-field select{
+    width:100%; padding:10px 12px; border-radius:8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--white); font-family:var(--mono); font-size:0.85rem;
+  }
+  .wp-btn{
+    width:100%; padding: 12px; border-radius:10px; border:none;
+    background: linear-gradient(100deg, var(--blue), #1c4fc0);
+    color:white; font-weight:600; font-size:0.86rem; cursor:pointer;
+    margin-top:6px;
+    transition: opacity .2s;
+  }
+  .wp-btn:hover{ opacity:0.88; }
+  .wp-btn:disabled{ opacity:0.4; cursor:not-allowed; }
+  .wp-status{ margin-top:12px; font-size:0.78rem; color:var(--gray); word-break:break-all; }
+  .wp-status.success{ color:#4ade80; }
+  .wp-status.error{ color:#f87171; }
+  .wp-note{ font-size:0.72rem; color:var(--gray); margin-top:14px; line-height:1.5; }
+
+  /* ---------- WAITLIST / EARLY ADOPTER ---------- */
+  .waitlist-section{
+    position:relative;
+    padding: 90px 5vw 110px;
+    background: var(--black);
+  }
+  .waitlist-section .eyebrow{ color: var(--blue-bright); }
+  .waitlist-section .eyebrow::before{ background: var(--blue-bright); }
+  .waitlist-section h2{
+    font-family:var(--disp); font-weight:600;
+    font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+    margin-bottom: 14px;
+  }
+  .waitlist-section > p{ color:var(--gray); max-width:520px; margin-bottom:46px; }
+
+  .tier-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 800px){ .tier-grid{ grid-template-columns: 1fr; } }
+
+  .tier-card{
+    position:relative;
+    background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 32px;
+    display:flex; flex-direction:column;
+  }
+  .tier-card.featured{ border-color: rgba(139,63,240,0.55); }
+  .tier-card .tier-badge{
+    position:absolute; top:-12px; right:24px;
+    background: linear-gradient(100deg, var(--purple), #5c1fc4);
+    font-size:0.68rem; font-family:var(--mono); letter-spacing:0.08em;
+    text-transform:uppercase; padding: 5px 14px; border-radius:100px;
+  }
+  .tier-card h3{
+    font-family:var(--disp); font-size:1.3rem; font-weight:600; margin-bottom:8px;
+  }
+  .tier-card .tier-price{
+    font-family:var(--mono); font-size:2rem; color:var(--blue-bright); margin-bottom:18px;
+  }
+  .tier-card .tier-price span{ font-size:0.9rem; color:var(--gray); }
+  .tier-card ul{ list-style:none; margin-bottom:26px; flex:1; }
+  .tier-card li{
+    font-size:0.86rem; color:var(--gray); padding:7px 0;
+    display:flex; align-items:flex-start; gap:8px;
+  }
+  .tier-card li::before{ content:'—'; color: var(--purple-bright); flex-shrink:0; }
+  .tier-btn{
+    padding: 13px; border-radius:10px; border:none;
+    background: linear-gradient(100deg, var(--purple), #5c1fc4);
+    color:white; font-weight:600; font-size:0.88rem; cursor:pointer;
+    transition: opacity .2s;
+  }
+  .tier-btn:hover{ opacity:0.88; }
+  .tier-btn:disabled{ opacity:0.5; cursor:not-allowed; }
+  .tier-card .tier-status{ margin-top:12px; font-size:0.78rem; color:var(--gray); word-break:break-all; }
+  .tier-card .tier-status.success{ color:#4ade80; }
+  .tier-card .tier-status.error{ color:#f87171; }
+
+  .adopter-badge{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:0.7rem;
+    padding: 4px 10px; border-radius:100px;
+    background: rgba(74,222,128,0.12);
+    border: 1px solid rgba(74,222,128,0.4);
+    color: #4ade80;
+    margin-left: 10px;
+  }
   @media (max-width: 820px){ nav ul{ display:none; } }
 
   /* ---------- HERO ---------- */
@@ -277,10 +478,11 @@
   @media (max-width:600px){ footer{ flex-direction:column; gap:14px; text-align:center; } }
 </style>
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
 <body>
 
 <nav>
-  <div class="logo"><span class="dot"></span>SI</div>
+  <div class="logo"><span class="dot"></span>Ominous</div>
   <div class="nav-links-wrap">
     <ul>
       <li><a href="#platform">Platform</a></li>
@@ -288,6 +490,17 @@
       <li><a href="#pricing">Pricing</a></li>
     </ul>
     <a href="#" class="nav-cta">Request access</a>
+    <div class="wallet-wrap">
+      <button class="wallet-btn" id="walletBtn">
+        <span class="wdot"></span>
+        <span class="wlabel" id="walletLabel">Connect Wallet</span>
+      </button>
+      <div class="wallet-menu" id="walletMenu">
+        <div class="addr-row" id="walletAddrRow"></div>
+        <button id="copyAddrBtn">Copy address</button>
+        <button id="disconnectBtn">Disconnect</button>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -298,7 +511,7 @@
     <div class="eyebrow">Signal Intelligence Platform</div>
     <h1>Every market signal,<br>rendered in real time.</h1>
     <div class="divider-line"></div>
-    <p class="sub">SI turns fragmented market data into a single, living surface — built for teams who trade on what's happening now, not what happened yesterday.</p>
+    <p class="sub">Ominous turns fragmented market data into a single, living surface — built for teams who trade on what's happening now, not what happened yesterday.</p>
     <div class="hero-actions">
       <a href="#dashboard" class="btn-primary">See the dashboard</a>
       <a href="#platform" class="btn-ghost">Watch overview →</a>
@@ -330,6 +543,112 @@
       fill="none" stroke="url(#waveGrad)" stroke-width="2.5" filter="url(#waveGlow)"/>
   </svg>
 </div>
+
+<section class="wallet-section" id="wallet-panel">
+  <div class="eyebrow">On-chain</div>
+  <h2>Your wallet, connected.</h2>
+
+  <div id="walletLocked" class="wallet-locked">
+    Connect a wallet to view balances, send payments, or interact with a contract.
+    <br>
+    <button id="walletLockedBtn">Connect Wallet</button>
+  </div>
+
+  <div id="walletUnlocked" class="wp-grid" style="display:none;">
+    <!-- Balances -->
+    <div class="wp-card">
+      <h3>Balances</h3>
+      <div id="networkLabel" class="wp-note" style="margin-top:-10px; margin-bottom:14px;"></div>
+      <div class="balance-row"><span class="sym">ETH</span><span class="amt" id="balEth">—</span></div>
+      <div class="balance-row"><span class="sym">USDC</span><span class="amt" id="balUsdc">—</span></div>
+      <div class="balance-row"><span class="sym">USDT</span><span class="amt" id="balUsdt">—</span></div>
+      <div class="balance-row"><span class="sym">DAI</span><span class="amt" id="balDai">—</span></div>
+      <div class="wp-note">Known token balances only resolve correctly on Ethereum Mainnet.</div>
+    </div>
+
+    <!-- Payment -->
+    <div class="wp-card">
+      <h3>Send payment</h3>
+      <div class="wp-field">
+        <label>Asset</label>
+        <select id="payAsset">
+          <option value="ETH">ETH</option>
+          <option value="USDC">USDC</option>
+          <option value="USDT">USDT</option>
+          <option value="DAI">DAI</option>
+        </select>
+      </div>
+      <div class="wp-field">
+        <label>Recipient address</label>
+        <input id="payTo" placeholder="0x...">
+      </div>
+      <div class="wp-field">
+        <label>Amount</label>
+        <input id="payAmount" placeholder="0.00">
+      </div>
+      <button class="wp-btn" id="payBtn">Send</button>
+      <div class="wp-status" id="payStatus"></div>
+    </div>
+
+    <!-- Contract interaction -->
+    <div class="wp-card">
+      <h3>Contract interaction</h3>
+      <div class="wp-field">
+        <label>Contract address</label>
+        <input id="contractAddr" placeholder="0x...">
+      </div>
+      <div class="wp-field">
+        <label>Function (human-readable ABI)</label>
+        <input id="contractFn" placeholder="e.g. function balanceOf(address) view returns (uint256)">
+      </div>
+      <div class="wp-field">
+        <label>Arguments (comma separated)</label>
+        <input id="contractArgs" placeholder="e.g. 0xYourAddress">
+      </div>
+      <button class="wp-btn" id="contractBtn">Call function</button>
+      <div class="wp-status" id="contractStatus"></div>
+      <div class="wp-note">Read-only ("view"/"pure") functions call for free. Any other function will prompt a transaction in your wallet.</div>
+    </div>
+  </div>
+</section>
+
+<section class="waitlist-section" id="waitlist">
+  <div class="eyebrow">Join early</div>
+  <h2>Reserve your spot<span id="adopterBadgeSlot"></span></h2>
+  <p>Secure a place on the Ominous waitlist or lock in Early Adopter status before public launch. Payment goes directly to the Ominous treasury wallet.</p>
+
+  <div class="tier-grid">
+    <div class="tier-card" data-tier="waitlist">
+      <h3>Waitlist Spot</h3>
+      <div class="tier-price">0.005 <span>ETH</span></div>
+      <ul>
+        <li>Guaranteed early access on launch</li>
+        <li>Launch announcement priority</li>
+        <li>Name on the founding waitlist</li>
+      </ul>
+      <button class="tier-btn" data-amount="0.005">Join waitlist</button>
+      <div class="tier-status"></div>
+    </div>
+
+    <div class="tier-card featured" data-tier="adopter">
+      <div class="tier-badge">Recommended</div>
+      <h3>Early Adopter</h3>
+      <div class="tier-price">0.02 <span>ETH</span></div>
+      <ul>
+        <li>Everything in Waitlist Spot</li>
+        <li>Early Adopter role/badge</li>
+        <li>Priority support channel</li>
+        <li>Locked-in early pricing at launch</li>
+      </ul>
+      <button class="tier-btn" data-amount="0.02">Become Early Adopter</button>
+      <div class="tier-status"></div>
+    </div>
+  </div>
+
+  <div class="wp-note" style="margin-top:28px; max-width:560px;">
+    All payments are on-chain ETH transactions sent directly to the Ominous treasury wallet — there is no third-party processor and no refund mechanism once confirmed. Status badges are stored locally in your browser as a receipt of payment; they are not a persistent account and won't sync across devices.
+  </div>
+</section>
 
 <section class="dash-section" id="dashboard">
   <div class="dash-glow"></div>
@@ -390,8 +709,8 @@
 </section>
 
 <footer>
-  <div class="logo"><span class="dot"></span>SI</div>
-  <div>© 2026 SI Signal Intelligence. All data illustrative.</div>
+  <div class="logo"><span class="dot"></span>Ominous</div>
+  <div>© 2026 Ominous Signal Intelligence. All data illustrative.</div>
 </footer>
 
 <script>
@@ -556,9 +875,8 @@ animateWave();
 
 // ---------- LIVE DATA WIRING ----------
 // Twelve Data covers indices (NDX), commodities (gold, oil) and yields on its
-// free tier. Get a free key at https://twelvedata.com/ and paste it below.
-// Crypto (CoinGecko) and FX (exchangerate.host) work with NO key.
-const TWELVE_DATA_KEY = 'ff8a40eb2ba94f8e96e0aa4e91d391b2';
+// free tier. Crypto (CoinGecko) and FX (exchangerate.host) work with NO key.
+const TWELVE_DATA_KEY = 'b21c611793ce4b91ae90a31be0e829a0';
 
 function renderChart(points){
   const w = 600, h = 220;
@@ -682,6 +1000,296 @@ setInterval(fetchCrypto, 30000);      // crypto prices every 30s
 setInterval(fetchFX, 60000);          // FX every 60s
 setInterval(fetchTwelveData, 60000);  // keyed data every 60s
 setInterval(updateClock, 1000);       // clock every second
+
+// ---------- WALLET CONNECTION ----------
+const walletBtn = document.getElementById('walletBtn');
+const walletLabel = document.getElementById('walletLabel');
+const walletMenu = document.getElementById('walletMenu');
+const walletAddrRow = document.getElementById('walletAddrRow');
+const copyAddrBtn = document.getElementById('copyAddrBtn');
+const disconnectBtn = document.getElementById('disconnectBtn');
+
+let currentAccount = null;
+
+function shortAddr(addr){
+  return addr.slice(0,6) + '…' + addr.slice(-4);
+}
+
+function setConnectedUI(addr){
+  currentAccount = addr;
+  walletBtn.classList.add('connected');
+  walletLabel.textContent = shortAddr(addr);
+  walletAddrRow.textContent = addr;
+  document.getElementById('walletLocked').style.display = 'none';
+  document.getElementById('walletUnlocked').style.display = 'grid';
+  loadBalances();
+}
+
+function setDisconnectedUI(){
+  currentAccount = null;
+  walletBtn.classList.remove('connected');
+  walletLabel.textContent = 'Connect Wallet';
+  walletMenu.classList.remove('open');
+  document.getElementById('walletLocked').style.display = 'block';
+  document.getElementById('walletUnlocked').style.display = 'none';
+}
+
+document.getElementById('walletLockedBtn').addEventListener('click', connectWallet);
+
+async function connectWallet(){
+  if(typeof window.ethereum === 'undefined'){
+    alert('No wallet extension detected. Install MetaMask, Coinbase Wallet, or another browser wallet to connect.');
+    return;
+  }
+  try{
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    if(accounts && accounts.length > 0){
+      setConnectedUI(accounts[0]);
+    }
+  }catch(err){
+    if(err.code === 4001){
+      console.log('User rejected wallet connection');
+    }else{
+      console.error('Wallet connection error', err);
+    }
+  }
+}
+
+walletBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if(currentAccount){
+    walletMenu.classList.toggle('open');
+  }else{
+    connectWallet();
+  }
+});
+
+document.addEventListener('click', () => {
+  walletMenu.classList.remove('open');
+});
+walletMenu.addEventListener('click', (e) => e.stopPropagation());
+
+copyAddrBtn.addEventListener('click', () => {
+  if(currentAccount){
+    navigator.clipboard.writeText(currentAccount);
+    copyAddrBtn.textContent = 'Copied!';
+    setTimeout(() => { copyAddrBtn.textContent = 'Copy address'; }, 1400);
+  }
+});
+
+disconnectBtn.addEventListener('click', () => {
+  // Note: standard wallet APIs don't offer a true "disconnect" — this just
+  // clears local UI state. The user can fully revoke access from their
+  // wallet extension's connected-sites settings.
+  setDisconnectedUI();
+});
+
+// Reconnect automatically if the wallet is already authorized (no popup)
+if(typeof window.ethereum !== 'undefined'){
+  window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+    if(accounts && accounts.length > 0) setConnectedUI(accounts[0]);
+  }).catch(()=>{});
+
+  window.ethereum.on && window.ethereum.on('accountsChanged', (accounts) => {
+    if(accounts.length === 0){
+      setDisconnectedUI();
+    }else{
+      setConnectedUI(accounts[0]);
+    }
+  });
+  window.ethereum.on && window.ethereum.on('chainChanged', () => {
+    if(currentAccount) loadBalances();
+  });
+}
+
+// ---------- BALANCES / PAYMENTS / CONTRACT CALLS (ethers.js) ----------
+const ERC20_ABI = [
+  'function balanceOf(address) view returns (uint256)',
+  'function decimals() view returns (uint8)',
+  'function symbol() view returns (string)',
+  'function transfer(address to, uint256 amount) returns (bool)'
+];
+
+// Mainnet-only token addresses. Balances/transfers for these only resolve
+// correctly when the connected wallet is on Ethereum Mainnet.
+const TOKENS = {
+  USDC: { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6 },
+  USDT: { address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', decimals: 6 },
+  DAI:  { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', decimals: 18 }
+};
+
+function getProvider(){
+  return new ethers.providers.Web3Provider(window.ethereum);
+}
+
+async function loadBalances(){
+  if(!currentAccount || typeof ethers === 'undefined') return;
+  try{
+    const provider = getProvider();
+    const network = await provider.getNetwork();
+    document.getElementById('networkLabel').textContent = `Network: ${network.name} (chainId ${network.chainId})`;
+
+    const ethBal = await provider.getBalance(currentAccount);
+    document.getElementById('balEth').textContent = parseFloat(ethers.utils.formatEther(ethBal)).toFixed(4);
+
+    for(const [sym, elId] of [['USDC','balUsdc'],['USDT','balUsdt'],['DAI','balDai']]){
+      try{
+        const t = TOKENS[sym];
+        const contract = new ethers.Contract(t.address, ERC20_ABI, provider);
+        const bal = await contract.balanceOf(currentAccount);
+        document.getElementById(elId).textContent = parseFloat(ethers.utils.formatUnits(bal, t.decimals)).toFixed(2);
+      }catch(e){
+        document.getElementById(elId).textContent = 'n/a';
+      }
+    }
+  }catch(e){
+    console.error('Balance load failed', e);
+  }
+}
+
+// --- Payment ---
+document.getElementById('payBtn').addEventListener('click', async () => {
+  const statusEl = document.getElementById('payStatus');
+  statusEl.className = 'wp-status';
+  if(!currentAccount){ statusEl.textContent = 'Connect your wallet first.'; statusEl.className='wp-status error'; return; }
+
+  const asset = document.getElementById('payAsset').value;
+  const to = document.getElementById('payTo').value.trim();
+  const amount = document.getElementById('payAmount').value.trim();
+
+  if(!ethers.utils.isAddress(to)){ statusEl.textContent = 'Enter a valid recipient address.'; statusEl.className='wp-status error'; return; }
+  if(!amount || isNaN(amount) || parseFloat(amount) <= 0){ statusEl.textContent = 'Enter a valid amount.'; statusEl.className='wp-status error'; return; }
+
+  try{
+    statusEl.textContent = 'Confirm the transaction in your wallet…';
+    const provider = getProvider();
+    const signer = provider.getSigner();
+
+    let tx;
+    if(asset === 'ETH'){
+      tx = await signer.sendTransaction({ to, value: ethers.utils.parseEther(amount) });
+    }else{
+      const t = TOKENS[asset];
+      const contract = new ethers.Contract(t.address, ERC20_ABI, signer);
+      tx = await contract.transfer(to, ethers.utils.parseUnits(amount, t.decimals));
+    }
+    statusEl.textContent = `Submitted: ${tx.hash}`;
+    statusEl.className = 'wp-status';
+    await tx.wait();
+    statusEl.textContent = `Confirmed: ${tx.hash}`;
+    statusEl.className = 'wp-status success';
+    loadBalances();
+  }catch(err){
+    console.error(err);
+    statusEl.textContent = err.reason || err.message || 'Transaction failed.';
+    statusEl.className = 'wp-status error';
+  }
+});
+
+// --- Generic contract interaction ---
+document.getElementById('contractBtn').addEventListener('click', async () => {
+  const statusEl = document.getElementById('contractStatus');
+  statusEl.className = 'wp-status';
+  if(!currentAccount){ statusEl.textContent = 'Connect your wallet first.'; statusEl.className='wp-status error'; return; }
+
+  const addr = document.getElementById('contractAddr').value.trim();
+  const fnSig = document.getElementById('contractFn').value.trim();
+  const rawArgs = document.getElementById('contractArgs').value.trim();
+  const args = rawArgs.length ? rawArgs.split(',').map(a => a.trim()) : [];
+
+  if(!ethers.utils.isAddress(addr)){ statusEl.textContent = 'Enter a valid contract address.'; statusEl.className='wp-status error'; return; }
+  if(!fnSig.startsWith('function ')){ statusEl.textContent = 'Function must be human-readable ABI, e.g. "function balanceOf(address) view returns (uint256)".'; statusEl.className='wp-status error'; return; }
+
+  try{
+    const provider = getProvider();
+    const signer = provider.getSigner();
+    const isReadOnly = /\b(view|pure)\b/.test(fnSig);
+    const contract = new ethers.Contract(addr, [fnSig], isReadOnly ? provider : signer);
+    const fnName = fnSig.split('function ')[1].split('(')[0].trim();
+
+    if(isReadOnly){
+      const result = await contract[fnName](...args);
+      statusEl.textContent = `Result: ${result.toString()}`;
+      statusEl.className = 'wp-status success';
+    }else{
+      statusEl.textContent = 'Confirm the transaction in your wallet…';
+      const tx = await contract[fnName](...args);
+      statusEl.textContent = `Submitted: ${tx.hash}`;
+      await tx.wait();
+      statusEl.textContent = `Confirmed: ${tx.hash}`;
+      statusEl.className = 'wp-status success';
+    }
+  }catch(err){
+    console.error(err);
+    statusEl.textContent = err.reason || err.message || 'Call failed.';
+    statusEl.className = 'wp-status error';
+  }
+});
+
+// ---------- WAITLIST / EARLY ADOPTER ----------
+// All tier payments go to this fixed treasury address, set by the site owner.
+const TREASURY_ADDRESS = '0xc0090FE0eD37892B24eBe02619cCC51da44A5A5c';
+
+function adopterStorageKey(addr){ return `si_tier_${addr.toLowerCase()}`; }
+
+function refreshAdopterBadge(){
+  const slot = document.getElementById('adopterBadgeSlot');
+  if(!slot) return;
+  slot.innerHTML = '';
+  if(!currentAccount) return;
+  const tier = localStorage.getItem(adopterStorageKey(currentAccount));
+  if(tier){
+    const label = tier === 'adopter' ? 'Early Adopter ✓' : 'Waitlisted ✓';
+    slot.innerHTML = `<span class="adopter-badge">${label}</span>`;
+  }
+}
+
+document.querySelectorAll('.tier-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const card = btn.closest('.tier-card');
+    const tier = card.getAttribute('data-tier');
+    const amount = btn.getAttribute('data-amount');
+    const statusEl = card.querySelector('.tier-status');
+    statusEl.className = 'tier-status';
+
+    if(!currentAccount){
+      statusEl.textContent = 'Connect your wallet first.';
+      statusEl.className = 'tier-status error';
+      connectWallet();
+      return;
+    }
+
+    try{
+      btn.disabled = true;
+      statusEl.textContent = 'Confirm the transaction in your wallet…';
+      const provider = getProvider();
+      const signer = provider.getSigner();
+      const tx = await signer.sendTransaction({
+        to: TREASURY_ADDRESS,
+        value: ethers.utils.parseEther(amount)
+      });
+      statusEl.textContent = `Submitted: ${tx.hash}`;
+      await tx.wait();
+      statusEl.textContent = `Confirmed! Welcome aboard.`;
+      statusEl.className = 'tier-status success';
+      localStorage.setItem(adopterStorageKey(currentAccount), tier);
+      refreshAdopterBadge();
+    }catch(err){
+      console.error(err);
+      statusEl.textContent = err.reason || err.message || 'Transaction failed.';
+      statusEl.className = 'tier-status error';
+    }finally{
+      btn.disabled = false;
+    }
+  });
+});
+
+// Show badge immediately if this wallet already paid in a past session
+const _origSetConnectedUI = setConnectedUI;
+setConnectedUI = function(addr){
+  _origSetConnectedUI(addr);
+  refreshAdopterBadge();
+};
 </script>
 
 </body>
