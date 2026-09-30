@@ -703,6 +703,98 @@
   footer .logo{ font-size:1rem; color:#fff; }
   footer .logo .dot{ background: var(--iri); }
   @media (max-width:600px){ footer{ flex-direction:column; gap:14px; text-align:center; } }
+
+  /* ---------- HERO CARD FAN (falls in, bounces, fans into a horizontal stack) ---------- */
+  .sw-stage{
+    --w: clamp(150px, 15vw, 230px);
+    position:absolute; z-index:3; pointer-events:none;
+    right:4vw; top:50%;
+    width: calc(var(--w) * 2.7); height: calc(var(--w) * 1.5);
+    margin-top: calc(var(--w) * -.55);
+  }
+  .sw-deck{ position:absolute; inset:0; animation: sw-float 7s ease-in-out 3.8s infinite; }
+  @keyframes sw-float{ 0%,100%{ translate:0 0; } 50%{ translate:0 -10px; } }
+  .sw-wrap{
+    position:absolute; left:50%; top:10%;
+    width:var(--w); margin-left:calc(var(--w) / -2);
+    z-index: calc(10 - var(--a));
+    opacity:0;
+    transform: translate(calc(var(--i) * 36%), calc(var(--y) * 1%)) rotate(calc(var(--i) * 7deg));
+    animation: sw-drop 2.8s cubic-bezier(.4,0,.6,1) forwards;
+    animation-delay: calc(.3s + var(--d) * .32s);
+  }
+  @keyframes sw-drop{
+    0%{ opacity:0; transform: translate(calc(var(--i)*36%), -150vh) rotate(calc(var(--i)*-55deg)); animation-timing-function:cubic-bezier(.5,0,.85,.5); }
+    10%{ opacity:1; }
+    52%{ opacity:1; transform: translate(calc(var(--i)*36%), calc(var(--y)*1% + 12%)) rotate(calc(var(--i)*7deg)); animation-timing-function:cubic-bezier(.2,.6,.4,1); }
+    68%{ opacity:1; transform: translate(calc(var(--i)*36%), calc(var(--y)*1% - 8%)) rotate(calc(var(--i)*7deg)); animation-timing-function:ease-in-out; }
+    84%{ opacity:1; transform: translate(calc(var(--i)*36%), calc(var(--y)*1% + 3%)) rotate(calc(var(--i)*7deg)); }
+    100%{ opacity:1; transform: translate(calc(var(--i)*36%), calc(var(--y)*1%)) rotate(calc(var(--i)*7deg)); }
+  }
+  .sw-card{
+    position:relative; aspect-ratio:1.586; overflow:hidden; color:#fff;
+    border-radius: calc(var(--w) * .075); padding: calc(var(--w) * .085);
+    display:flex; flex-direction:column; justify-content:space-between;
+    box-shadow: 0 34px 50px -24px rgba(10,10,13,.45), 0 2px 0 rgba(255,255,255,.5) inset;
+  }
+  .sw-card::after{
+    content:''; position:absolute; inset:0; pointer-events:none; mix-blend-mode:overlay;
+    background: linear-gradient(115deg, rgba(255,255,255,.75) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 60%, rgba(255,255,255,.3) 85%, rgba(255,255,255,0));
+  }
+  .sw-top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .sw-chip{ width:calc(var(--w)*.14); height:calc(var(--w)*.105); border-radius:20%; background:linear-gradient(135deg,#f6e3a4,#c9a24a); }
+  .sw-mark{ font-family:var(--disp); font-weight:700; font-size:calc(var(--w)*.075); letter-spacing:.02em; }
+  .sw-num{ font-family:var(--disp); font-weight:500; font-size:calc(var(--w)*.062); letter-spacing:.08em; text-shadow:0 1px 6px rgba(0,0,0,.25); }
+  .sw-num small{ display:block; font-family:var(--body); font-size:.7em; letter-spacing:.02em; opacity:.85; margin-top:.35em; }
+  .sw-red{ background: radial-gradient(ellipse 60% 45% at 20% 20%,#ffb08a,transparent 60%), radial-gradient(ellipse 55% 60% at 80% 80%,#ff2d55,transparent 62%), radial-gradient(ellipse 40% 30% at 65% 15%,#ffd27a,transparent 70%), linear-gradient(140deg,#d62839,#8f0f3a); }
+  .sw-blue{ background: radial-gradient(ellipse 55% 50% at 18% 78%,#7ae0ff,transparent 62%), radial-gradient(ellipse 60% 55% at 82% 22%,#2d5bff,transparent 62%), radial-gradient(ellipse 40% 30% at 50% 55%,#9dfaff,transparent 70%), linear-gradient(140deg,#1d4ed8,#0a2580); }
+  .sw-holo{ background: conic-gradient(from 130deg at 45% 55%,#22d3ee,#a855f7,#fb7185,#facc15,#22d3ee); color:#10101a; }
+  .sw-holo .sw-num{ text-shadow:none; }
+
+
+  .sw-card{ pointer-events:auto; cursor:pointer; text-decoration:none; transition: transform .3s cubic-bezier(.16,.8,.3,1); }
+  .sw-card:hover, .sw-card:focus-visible{ transform: translateY(-10px); }
+  .sw-card:focus-visible{ outline:2px solid var(--violet); outline-offset:3px; }
+
+
+  /* ---------- CARD DETAIL VIEW ---------- */
+  .sw-modal{ position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center;
+    padding: max(20px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom));
+    background: rgba(10,10,13,.45); backdrop-filter: blur(6px); }
+  .sw-modal.open{ display:flex; }
+  .sw-panel{ --w: min(62vw, 270px); position:relative; width:100%; max-width:420px; max-height:100%; overflow:auto;
+    background:var(--paper); border-radius:28px; padding: 28px 24px 24px; text-align:left;
+    box-shadow: 0 40px 80px -20px rgba(10,10,13,.5); animation: sw-pop .35s cubic-bezier(.16,.8,.3,1); }
+  @keyframes sw-pop{ from{ opacity:0; transform: translateY(18px) scale(.96); } to{ opacity:1; transform:none; } }
+  .sw-panel .sw-card{ margin: 0 auto 24px; transform:none; transition:none; cursor:default; }
+  .sw-close{ position:absolute; top:14px; right:14px; width:36px; height:36px; border-radius:50%; border:1px solid var(--border-l);
+    background:var(--paper-soft); color:var(--ink); font-size:1.1rem; line-height:1; cursor:pointer; z-index:2; }
+  .sw-close:focus-visible, .sw-panel .btn-primary:focus-visible{ outline:2px solid var(--violet); outline-offset:3px; }
+  .sw-panel h3{ font-family:var(--disp); font-weight:600; font-size:1.5rem; letter-spacing:-.02em; }
+  .sw-panel .sw-desc{ color:var(--ink-soft); font-size:.95rem; line-height:1.55; margin:8px 0 16px; }
+  .sw-panel ul{ list-style:none; border-top:1px solid var(--border-l); }
+  .sw-panel li{ padding:12px 0; border-bottom:1px solid var(--border-l); font-size:.92rem; }
+  .sw-panel .btn-primary{ width:100%; text-align:center; margin-top:20px; }
+
+  /* blurred floating cards behind the hero */
+  .sw-bg{ position:absolute; z-index:2; pointer-events:none; width:clamp(180px,20vw,300px); aspect-ratio:1.586; border-radius:24px; filter:blur(16px); opacity:.5; animation: sw-drift 9s ease-in-out infinite; }
+  .sw-b1{ right:34%; bottom:6%; background:linear-gradient(135deg,#ff6b81,#c81d4a); transform:rotate(-18deg); }
+  .sw-b2{ right:-4%; top:16%; background:linear-gradient(135deg,#5b8cff,#1b3fb8); transform:rotate(16deg); animation-delay:-3s; }
+  .sw-b3{ right:12%; bottom:-4%; width:clamp(140px,14vw,220px); background:conic-gradient(from 120deg,#22d3ee,#a855f7,#fb7185,#facc15,#22d3ee); opacity:.3; animation-delay:-6s; }
+  @keyframes sw-drift{ 0%,100%{ translate:0 0; } 50%{ translate:0 -22px; } }
+  @media (max-width: 900px){
+    .sw-bg{ display:none; }
+    .hero{ flex-direction:column; align-items:flex-start; justify-content:center; }
+    .sw-stage{
+      --w: 34vw;
+      position:relative; right:auto; top:auto;
+      align-self:center; margin: 44px 0 56px; z-index:3;
+    }
+    .scroll-cue{ display:none; }
+    .hero-content{ order:1; }
+    .sw-stage{ order:2; }
+  }
+  @media (prefers-reduced-motion: reduce){ .sw-wrap{ animation:none; opacity:1; } .sw-deck, .sw-bg{ animation:none; } }
 </style>
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
@@ -734,9 +826,18 @@
 <section class="hero" id="platform">
   <canvas id="fiber-canvas"></canvas>
   <div class="hero-veil"></div>
-  <div class="hero-float-card c1"></div>
-  <div class="hero-float-card c2"></div>
-  <div class="hero-float-card c3"></div>
+  <div class="sw-bg sw-b1" aria-hidden="true"></div>
+  <div class="sw-bg sw-b2" aria-hidden="true"></div>
+  <div class="sw-bg sw-b3" aria-hidden="true"></div>
+  <div class="sw-stage">
+    <div class="sw-deck">
+      <div class="sw-wrap" style="--i:-2;--y:14;--a:2;--d:0"><a class="sw-card sw-blue" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 4021<small>Everyday</small></div></a></div>
+      <div class="sw-wrap" style="--i:2;--y:14;--a:2;--d:1"><a class="sw-card sw-red" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 7730<small>Travel</small></div></a></div>
+      <div class="sw-wrap" style="--i:-1;--y:4;--a:1;--d:2"><a class="sw-card sw-red" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 1188<small>Shopping</small></div></a></div>
+      <div class="sw-wrap" style="--i:1;--y:4;--a:1;--d:3"><a class="sw-card sw-blue" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 5562<small>Savings</small></div></a></div>
+      <div class="sw-wrap" style="--i:0;--y:0;--a:0;--d:4"><a class="sw-card sw-holo" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 0001<small>Signal</small></div></a></div>
+    </div>
+  </div>
   <div class="hero-content">
     <div class="eyebrow">Signal Intelligence Platform</div>
     <h1>Switch up to next<br>generation of wallets.</h1>
@@ -1801,5 +1902,60 @@ document.querySelectorAll('.tier-btn').forEach(btn => {
 });
 </script>
 
+
+<div class="sw-modal" id="swModal" role="dialog" aria-modal="true" aria-labelledby="swTitle">
+  <div class="sw-panel">
+    <button class="sw-close" id="swClose" aria-label="Close card details">✕</button>
+    <div id="swPreview"></div>
+    <h3 id="swTitle"></h3>
+    <p class="sw-desc" id="swDesc"></p>
+    <ul id="swList"></ul>
+    <a href="#waitlist" class="btn-primary" id="swJoin">Join the waitlist</a>
+  </div>
+</div>
+<script>
+(function(){
+  const INFO = {
+    Everyday: ['Everyday card','Your main card for groceries, transport and subscriptions.',['Tap to pay in seconds','Alert for every transaction','Freeze and unfreeze from your phone']],
+    Travel: ['Travel card','Pay abroad without switching apps or carrying cash.',['Spend in local currencies','Alert when you pay in a new country','Freeze and unfreeze from your phone']],
+    Shopping: ['Shopping card','A separate card for online stores, so your main balance stays safe.',['Purchase alerts in real time','Set a spending limit','Freeze and unfreeze from your phone']],
+    Savings: ['Savings card','Set money aside and watch your goal grow.',['Create savings goals','See progress at a glance','Move money in and out instantly']],
+    Signal: ['Signal card','Linked to your SI wallet and live market signals.',['Pay from your connected wallet','Get signal alerts on your phone','Early access for waitlist members']]
+  };
+  const modal = document.getElementById('swModal');
+  const preview = document.getElementById('swPreview');
+  let opener = null;
+
+  function openCard(card){
+    const label = card.querySelector('small').textContent;
+    const d = INFO[label]; if(!d) return;
+    opener = card;
+    const copy = document.createElement('div');
+    copy.className = card.className;
+    copy.innerHTML = card.innerHTML;
+    preview.replaceChildren(copy);
+    document.getElementById('swTitle').textContent = d[0];
+    document.getElementById('swDesc').textContent = d[1];
+    const list = document.getElementById('swList');
+    list.replaceChildren(...d[2].map(t => { const li = document.createElement('li'); li.textContent = t; return li; }));
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('swClose').focus();
+  }
+  function closeCard(){
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    if(opener) opener.focus();
+  }
+
+  document.querySelectorAll('.sw-stage .sw-card').forEach(card => {
+    card.addEventListener('click', e => { e.preventDefault(); openCard(card); });
+  });
+  document.getElementById('swClose').addEventListener('click', closeCard);
+  modal.addEventListener('click', e => { if(e.target === modal) closeCard(); });
+  document.getElementById('swJoin').addEventListener('click', () => { modal.classList.remove('open'); document.body.style.overflow = ''; });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && modal.classList.contains('open')) closeCard(); });
+})();
+</script>
 </body>
 </html>
