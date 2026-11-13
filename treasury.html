@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Read-only SI treasury address directory and explorer links.">
+  <title>SI Treasury | Read-only</title>
+  <style>
+    :root{color-scheme:light;--ink:#12131a;--muted:#656979;--line:#e6e7ed;--paper:#fff;--soft:#f6f7fa;--cyan:#22d3ee;--violet:#a855f7;--coral:#fb7185;--green:#16784b}
+    *{box-sizing:border-box}body{margin:0;background:#f8f8fb;color:var(--ink);font:16px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    a{color:inherit}.wrap{width:min(1080px,92vw);margin:0 auto}.top{padding:42px 0 26px}.eyebrow{font-size:.76rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#7a3ac4}.top h1{font-size:clamp(2rem,5vw,3rem);line-height:1.08;letter-spacing:-.04em;margin:10px 0}.top p{color:var(--muted);max-width:680px;margin:0}
+    .notice{border:1px solid #f0d99a;background:#fff9e9;border-radius:14px;padding:16px 18px;margin:24px 0;color:#563f08}.notice strong{display:block;margin-bottom:4px}.notice p{margin:0;font-size:.92rem}
+    .section-title{font-size:1.05rem;margin:32px 0 14px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:16px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 6px 24px #12131a08}.chain{display:flex;align-items:center;justify-content:space-between;gap:12px}.chain h2{font-size:1.1rem;margin:0}.tag{font-size:.72rem;font-weight:700;background:#f0e9fb;color:#6931a2;border-radius:999px;padding:5px 9px}.addr-label{color:var(--muted);font-size:.77rem;margin:20px 0 6px}.address{font: .84rem/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:11px 12px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:600 .83rem inherit;cursor:pointer;background:#fff}.btn.primary{border:0;background:linear-gradient(110deg,var(--cyan),var(--violet),var(--coral));color:#14131a}.btn:hover{filter:brightness(.97)}.status{min-height:1.2em;margin-top:8px;color:var(--green);font-size:.8rem}
+    .state{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}.dot{width:9px;height:9px;border-radius:50%;background:#df9d21;margin-top:6px;flex:none}.state p{margin:0;color:var(--muted);font-size:.92rem}.state strong{display:block;color:var(--ink);margin-bottom:3px}.foot{padding:30px 0 44px;color:var(--muted);font-size:.82rem}.foot a{color:#6531a0}
+    @media(max-width:500px){.top{padding-top:28px}.card{padding:18px}.actions .btn{flex:1}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div class="eyebrow">SI · Treasury</div>
+      <h1>Treasury addresses</h1>
+      <p>A read-only directory for the wallet addresses supplied by the project owner. Use the chain explorers below to independently inspect balances and transactions.</p>
+    </header>
+
+    <aside class="notice" role="note">
+      <strong>Read-only dashboard — not an authenticated admin area</strong>
+      <p>This static page does not process payments, verify reservations, or secure administrator data. Do not treat its figures or links as proof of payment. Confirm the recipient and network in your wallet before signing any transaction.</p>
+    </aside>
+
+    <h2 class="section-title">Configured treasury wallets</h2>
+    <section class="grid" aria-label="Treasury wallet addresses">
+      <article class="card">
+        <div class="chain"><h2>Ethereum</h2><span class="tag">EVM · Mainnet</span></div>
+        <div class="addr-label">Treasury address</div>
+        <div class="address" id="eth-address">0xc0090FE0eD37892B24eBe02619cCC51da44A5A5c</div>
+        <div class="actions"><button class="btn" type="button" data-copy="eth-address">Copy address</button><a class="btn primary" href="https://etherscan.io/address/0xc0090FE0eD37892B24eBe02619cCC51da44A5A5c" target="_blank" rel="noopener noreferrer">View on Etherscan ↗</a></div>
+        <div class="status" aria-live="polite"></div>
+      </article>
+      <article class="card">
+        <div class="chain"><h2>Base</h2><span class="tag">EVM · Base</span></div>
+        <div class="addr-label">Treasury address</div>
+        <div class="address" id="base-address">0xc0090FE0eD37892B24eBe02619cCC51da44A5A5c</div>
+        <div class="actions"><button class="btn" type="button" data-copy="base-address">Copy address</button><a class="btn primary" href="https://basescan.org/address/0xc0090FE0eD37892B24eBe02619cCC51da44A5A5c" target="_blank" rel="noopener noreferrer">View on Basescan ↗</a></div>
+        <div class="status" aria-live="polite"></div>
+      </article>
+      <article class="card">
+        <div class="chain"><h2>Solana</h2><span class="tag">Solana · Mainnet</span></div>
+        <div class="addr-label">Treasury address</div>
+        <div class="address" id="sol-address">5XKgD7MCFqTtCpJW97eFoZLEyY8XxjicHqbWuXP6fTvH</div>
+        <div class="actions"><button class="btn" type="button" data-copy="sol-address">Copy address</button><a class="btn primary" href="https://solscan.io/account/5XKgD7MCFqTtCpJW97eFoZLEyY8XxjicHqbWuXP6fTvH" target="_blank" rel="noopener noreferrer">View on Solscan ↗</a></div>
+        <div class="status" aria-live="polite"></div>
+      </article>
+    </section>
+
+    <h2 class="section-title">Reservation and payment records</h2>
+    <div class="state" role="status">
+      <span class="dot" aria-hidden="true"></span>
+      <div><strong>Not connected yet</strong><p>This repository is a static HTML site and has no reservation database, payment verifier, or administrator authentication. Explorer pages show on-chain activity, but cannot reliably determine which reservation tier a transfer was intended for. Do not mark a reservation complete based only on a browser-side record.</p></div>
+    </div>
+    <footer class="foot">This page displays public wallet addresses and links to third-party explorers. Explorer availability and displayed data are controlled by those services.</footer>
+  </main>
+  <script>
+    document.querySelectorAll('[data-copy]').forEach(button => {
+      button.addEventListener('click', async () => {
+        const address = document.getElementById(button.dataset.copy).textContent.trim();
+        const status = button.closest('.card').querySelector('.status');
+        try {
+          await navigator.clipboard.writeText(address);
+          status.textContent = 'Address copied.';
+        } catch {
+          status.textContent = 'Copy unavailable here. Select and copy the address above.';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
