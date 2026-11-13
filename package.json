@@ -1,0 +1,8 @@
+{
+  "name": "si-reserve-ledger",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SI treasury reservation flow with server-verified EVM payments and admin ledger",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node server.js" }
+}
