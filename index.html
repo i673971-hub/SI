@@ -719,17 +719,17 @@
     width:var(--w); margin-left:calc(var(--w) / -2);
     z-index: calc(10 - var(--a));
     opacity:0;
-    transform: translate(calc(var(--i) * 36%), calc(var(--y) * 1%)) rotate(calc(var(--i) * 7deg));
+    transform: translate(var(--x), var(--y)) rotate(var(--rot));
     animation: sw-drop 2.8s cubic-bezier(.4,0,.6,1) forwards;
     animation-delay: calc(.3s + var(--d) * .32s);
   }
   @keyframes sw-drop{
-    0%{ opacity:0; transform: translate(calc(var(--i)*36%), -150vh) rotate(calc(var(--i)*-55deg)); animation-timing-function:cubic-bezier(.5,0,.85,.5); }
+    0%{ opacity:0; transform: translate(var(--x), -150vh) rotate(0deg); animation-timing-function:cubic-bezier(.5,0,.85,.5); }
     10%{ opacity:1; }
-    52%{ opacity:1; transform: translate(calc(var(--i)*36%), calc(var(--y)*1% + 12%)) rotate(calc(var(--i)*7deg)); animation-timing-function:cubic-bezier(.2,.6,.4,1); }
-    68%{ opacity:1; transform: translate(calc(var(--i)*36%), calc(var(--y)*1% - 8%)) rotate(calc(var(--i)*7deg)); animation-timing-function:ease-in-out; }
-    84%{ opacity:1; transform: translate(calc(var(--i)*36%), calc(var(--y)*1% + 3%)) rotate(calc(var(--i)*7deg)); }
-    100%{ opacity:1; transform: translate(calc(var(--i)*36%), calc(var(--y)*1%)) rotate(calc(var(--i)*7deg)); }
+    52%{ opacity:1; transform: translate(var(--x), calc(var(--y) + 12%)) rotate(var(--rot)); animation-timing-function:cubic-bezier(.2,.6,.4,1); }
+    68%{ opacity:1; transform: translate(var(--x), calc(var(--y) - 8%)) rotate(var(--rot)); animation-timing-function:ease-in-out; }
+    84%{ opacity:1; transform: translate(var(--x), calc(var(--y) + 3%)) rotate(var(--rot)); }
+    100%{ opacity:1; transform: translate(var(--x), var(--y)) rotate(var(--rot)); }
   }
   .sw-card{
     position:relative; aspect-ratio:1.586; overflow:hidden; color:#fff;
@@ -746,8 +746,8 @@
   .sw-mark{ font-family:var(--disp); font-weight:700; font-size:calc(var(--w)*.075); letter-spacing:.02em; }
   .sw-num{ font-family:var(--disp); font-weight:500; font-size:calc(var(--w)*.062); letter-spacing:.08em; text-shadow:0 1px 6px rgba(0,0,0,.25); }
   .sw-num small{ display:block; font-family:var(--body); font-size:.7em; letter-spacing:.02em; opacity:.85; margin-top:.35em; }
-  .sw-red{ background: radial-gradient(ellipse 60% 45% at 20% 20%,#ffb08a,transparent 60%), radial-gradient(ellipse 55% 60% at 80% 80%,#ff2d55,transparent 62%), radial-gradient(ellipse 40% 30% at 65% 15%,#ffd27a,transparent 70%), linear-gradient(140deg,#d62839,#8f0f3a); }
-  .sw-blue{ background: radial-gradient(ellipse 55% 50% at 18% 78%,#7ae0ff,transparent 62%), radial-gradient(ellipse 60% 55% at 82% 22%,#2d5bff,transparent 62%), radial-gradient(ellipse 40% 30% at 50% 55%,#9dfaff,transparent 70%), linear-gradient(140deg,#1d4ed8,#0a2580); }
+  .sw-red{ background: radial-gradient(ellipse 60% 45% at 20% 20%,#ffb08a,transparent 60%), radial-gradient(ellipse 55% 60% at 80% 80%,#ff2d55,transparent 62%), linear-gradient(135deg,#f26973,#c11d39); }
+  .sw-blue{ background: radial-gradient(ellipse 55% 50% at 18% 78%,#7ae0ff,transparent 62%), radial-gradient(ellipse 60% 55% at 82% 22%,#2d5bff,transparent 62%), linear-gradient(135deg,#2a7af6,#132e8d); }
   .sw-holo{ background: conic-gradient(from 130deg at 45% 55%,#22d3ee,#a855f7,#fb7185,#facc15,#22d3ee); color:#10101a; }
   .sw-holo .sw-num{ text-shadow:none; }
 
@@ -831,11 +831,11 @@
   <div class="sw-bg sw-b3" aria-hidden="true"></div>
   <div class="sw-stage">
     <div class="sw-deck">
-      <div class="sw-wrap" style="--i:-2;--y:14;--a:2;--d:0"><a class="sw-card sw-blue" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 4021<small>Everyday</small></div></a></div>
-      <div class="sw-wrap" style="--i:2;--y:14;--a:2;--d:1"><a class="sw-card sw-red" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 7730<small>Travel</small></div></a></div>
-      <div class="sw-wrap" style="--i:-1;--y:4;--a:1;--d:2"><a class="sw-card sw-red" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 1188<small>Shopping</small></div></a></div>
-      <div class="sw-wrap" style="--i:1;--y:4;--a:1;--d:3"><a class="sw-card sw-blue" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 5562<small>Savings</small></div></a></div>
-      <div class="sw-wrap" style="--i:0;--y:0;--a:0;--d:4"><a class="sw-card sw-holo" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 0001<small>Signal</small></div></a></div>
+      <div class="sw-wrap" style="--x:-72%;--y:14%;--a:2;--d:0;--rot:-14deg"><a class="sw-card sw-blue" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 1188<small>Shopping</small></div></a></div>
+      <div class="sw-wrap" style="--x:72%;--y:14%;--a:2;--d:1;--rot:14deg"><a class="sw-card sw-red" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 5562<small>Savings</small></div></a></div>
+      <div class="sw-wrap" style="--x:-36%;--y:4%;--a:1;--d:2;--rot:-7deg"><a class="sw-card sw-red" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 1188<small>Shopping</small></div></a></div>
+      <div class="sw-wrap" style="--x:36%;--y:4%;--a:1;--d:3;--rot:7deg"><a class="sw-card sw-blue" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 5562<small>Savings</small></div></a></div>
+      <div class="sw-wrap" style="--x:0%;--y:0%;--a:0;--d:4;--rot:0deg"><a class="sw-card sw-holo" href="#waitlist" aria-label="Join the waitlist"><div class="sw-top"><span class="sw-chip"></span><span class="sw-mark">SI</span></div><div class="sw-num">•••• 5562<small>Travel</small></div></a></div>
     </div>
   </div>
   <div class="hero-content">
@@ -997,41 +997,45 @@
   </div>
 
   <div class="wp-note" style="margin-top:28px; max-width:560px;">
-    All payments are on-chain ETH transactions sent directly to the SI treasury wallet — there is no third-party processor and no refund mechanism once confirmed. Status badges are stored locally in your browser as a receipt of payment; they are not a persistent account and won't sync across devices.
+    All payments are on-chain ETH transactions sent directly to the SI treasury wallet — there is no third-party processor and no refund mechanism once confirmed. Status badges are stored locally in your browser until a server-backed registry is live.
   </div>
 </section>
 
 <section class="signals-section" id="signals">
   <div class="eyebrow">Signals</div>
-  <h2>Read the trend, set your alerts.</h2>
-  <p>Computed live from real BTC/ETH price data — not predictions, not advice, just the underlying numbers laid out clearly.</p>
+  <h2>Know what matters before the market moves.</h2>
+  <p>Monitor the signals driving your wallet, with alerts built around volume, liquidity shifts, and live price context.</p>
 
   <div class="signals-grid">
     <div class="panel">
-      <h3 class="panel-title">BTC Trend Indicator</h3>
-      <div id="trendBadge" class="signal-badge neutral"><span class="sdot"></span>Loading…</div>
-      <div class="signal-metric-row"><span>Short-term avg (last ~2h)</span><span class="sval" id="smaShort">—</span></div>
-      <div class="signal-metric-row"><span>24h avg</span><span class="sval" id="smaLong">—</span></div>
-      <div class="signal-metric-row"><span>24h volatility</span><span class="sval" id="volMetric">—</span></div>
-      <div class="signal-note">Trend is a simple moving-average comparison, not a trading signal or financial advice. Markets can reverse instantly — always do your own research.</div>
+      <div class="panel-title">Current trend</div>
+      <div class="signal-badge bullish"><span class="sdot"></span>Bullish</div>
+      <div class="signal-metric-row"><span>Market breadth</span><span class="sval">72%</span></div>
+      <div class="signal-metric-row"><span>Liquidity inflow</span><span class="sval">+$2.3M</span></div>
+      <div class="signal-metric-row"><span>Avg. sentiment</span><span class="sval">+0.34</span></div>
+      <div class="signal-note">Momentum remains positive, but watch for short-term volatility around key support levels.</div>
     </div>
 
     <div class="panel">
-      <h3 class="panel-title" style="margin-bottom:20px;">Price Alerts</h3>
+      <div class="panel-title">Set an alert</div>
       <div class="alert-form">
-        <select id="alertAsset">
-          <option value="BTC">BTC</option>
-          <option value="ETH">ETH</option>
+        <select aria-label="Asset">
+          <option>ETH</option>
+          <option>BTC</option>
+          <option>USDC</option>
         </select>
-        <select id="alertDirection">
-          <option value="above">Above</option>
-          <option value="below">Below</option>
+        <select aria-label="Condition">
+          <option>above</option>
+          <option>below</option>
         </select>
-        <input id="alertPrice" placeholder="Target $">
-        <button id="addAlertBtn">Add</button>
+        <input value="$2,700" aria-label="Price threshold">
+        <button>Save</button>
       </div>
-      <div class="alert-list" id="alertList"></div>
-      <div class="signal-note">Alerts are checked locally in your browser roughly every 30 seconds while this tab is open — they won't fire if the tab is closed, and they don't send email/SMS. Browser notifications require your permission.</div>
+      <div class="alert-list">
+        <div class="alert-item triggered"><span>ETH > $2,700</span><button class="alert-remove" aria-label="Remove">×</button></div>
+        <div class="alert-item"><span>BTC < $62,000</span><button class="alert-remove" aria-label="Remove">×</button></div>
+      </div>
+      <div class="signal-note">Alerts update as the signal engine refreshes. You can configure them from your SI account or linked wallet.</div>
     </div>
   </div>
 </section>
@@ -1039,56 +1043,50 @@
 <section class="dash-section" id="dashboard">
   <div class="dash-glow"></div>
   <div class="dash-head">
-    <div class="eyebrow">Live dashboard</div>
-    <h2>One surface for every position, every signal.</h2>
-    <p>Streaming order flow, volatility surfaces, and portfolio exposure — reconciled in milliseconds, styled for the way analysts actually read a screen.</p>
+    <div class="eyebrow">Dashboard</div>
+    <h2>All the signal you need in one live view.</h2>
+    <p>Track key portfolio metrics, price momentum, and wallet health in a dashboard that updates as your exposure changes.</p>
   </div>
 
   <div class="dash-grid bento">
     <div class="panel panel-main bento-chart">
       <div class="panel-row">
         <div>
-          <div class="panel-title" id="mainAssetLabel">BTC / USD</div>
-          <div class="panel-value" id="mainAssetValue">— <span id="mainAssetChange">…</span></div>
+          <div class="panel-title">Portfolio</div>
+          <div class="panel-value">$184,220 <span>+12.8%</span></div>
         </div>
-        <div class="panel-title" style="text-align:right;">24H<br><span id="liveClock" style="color:var(--ink); font-family:var(--body); font-size:0.85rem;">—</span></div>
       </div>
       <div class="chart-wrap">
-        <svg viewBox="0 0 600 220" preserveAspectRatio="none" id="mainChart">
+        <svg viewBox="0 0 600 220" preserveAspectRatio="none" aria-label="Portfolio chart">
           <defs>
-            <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#a855f7" stop-opacity="0.35"/>
-              <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+            <linearGradient id="areaFill" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.45"/>
+              <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.02"/>
             </linearGradient>
           </defs>
-          <path id="areaPath" fill="url(#areaFill)" stroke="none" d=""></path>
-          <path id="linePath" fill="none" stroke="#a855f7" stroke-width="2.5" d=""></path>
+          <path id="areaPath" d="M0,160 L120,130 L240,120 L360,80 L480,70 L600,40 L600,220 L0,220 Z" fill="url(#areaFill)"></path>
+          <path id="linePath" d="M0,160 L120,130 L240,120 L360,80 L480,70 L600,40" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </div>
     </div>
 
     <div class="panel mini-card bento-mini1">
-      <div class="panel-title">ETH / USD</div>
-      <div class="mini-val" id="ethPrice">—</div>
+      <div class="panel-title">Yield</div>
+      <div class="mini-val">8.42%</div>
     </div>
 
     <div class="panel mini-card bento-mini2">
-      <div class="panel-title">Data status</div>
-      <div class="mini-val" id="dataStatus" style="font-size:1rem;">Connecting…</div>
+      <div class="panel-title">Treasury</div>
+      <div class="mini-val">$2.8M</div>
     </div>
 
     <div class="panel bento-watchlist">
-      <div class="panel-title" style="margin-bottom:20px; display:flex; justify-content:space-between;">
-        <span>Watchlist</span>
-        <span id="watchlistUpdated" style="font-family:var(--body); text-transform:none; letter-spacing:0; color:var(--ink-soft);"></span>
-      </div>
-      <div class="stat-list" id="watchlist">
-        <div class="stat-item" data-row="ndx"><span class="stat-label">NDX (Nasdaq 100)</span><span class="stat-num">…</span></div>
-        <div class="stat-item" data-row="us10y"><span class="stat-label">10Y Treasury Yield</span><span class="stat-num">…</span></div>
-        <div class="stat-item" data-row="btc"><span class="stat-label">BTC/USD</span><span class="stat-num">…</span></div>
-        <div class="stat-item" data-row="eurusd"><span class="stat-label">EUR/USD</span><span class="stat-num">…</span></div>
-        <div class="stat-item" data-row="gold"><span class="stat-label">Gold Spot (XAU/USD)</span><span class="stat-num">…</span></div>
-        <div class="stat-item" data-row="oil"><span class="stat-label">WTI Crude</span><span class="stat-num">…</span></div>
+      <div class="panel-title">Watchlist</div>
+      <div class="stat-list">
+        <div class="stat-item"><span class="stat-label">ETH</span><span class="stat-num up">+4.2%</span></div>
+        <div class="stat-item"><span class="stat-label">SOL</span><span class="stat-num up">+3.8%</span></div>
+        <div class="stat-item"><span class="stat-label">LINK</span><span class="stat-num down">-1.1%</span></div>
+        <div class="stat-item"><span class="stat-label">ARB</span><span class="stat-num up">+2.4%</span></div>
       </div>
     </div>
   </div>
@@ -1096,815 +1094,11 @@
 
 <footer>
   <div class="logo"><span class="dot"></span>SI</div>
-  <div>© 2026 SI Signal Intelligence. All data illustrative.</div>
+  <div>Signal intelligence for modern capital.</div>
 </footer>
 
-<script>
-// ---------- Fiber-optic swirl canvas ----------
-const canvas = document.getElementById('fiber-canvas');
-const ctx = canvas.getContext('2d');
-let W, H, dpr;
-
-function resize(){
-  dpr = Math.min(window.devicePixelRatio || 1, 2);
-  W = canvas.clientWidth = window.innerWidth;
-  H = canvas.clientHeight = canvas.parentElement.offsetHeight;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-}
-window.addEventListener('resize', resize);
-resize();
-
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-// Strand system: each strand is a swirling curve made of a chain of points
-const STRAND_COUNT = 46;
-let strands = [];
-
-function makeStrand(i){
-  const originSide = 0.5; // origin around left-center, spreads outward
-  return {
-    seed: Math.random()*1000,
-    speed: 0.15 + Math.random()*0.35,
-    radius: 40 + Math.random()*260,
-    baseAngle: Math.random()*Math.PI*2,
-    angleSpeed: (0.15 + Math.random()*0.4) * (Math.random()<0.5?-1:1),
-    len: 60 + Math.random()*140,
-    hueMix: Math.random(), // 0 = purple, 1 = blue-ish purple
-    width: 0.6 + Math.random()*1.6,
-    depth: Math.random(), // controls parallax / opacity
-    phase: Math.random()*Math.PI*2
-  };
-}
-for(let i=0;i<STRAND_COUNT;i++) strands.push(makeStrand(i));
-
-let startTime = performance.now();
-const totalDuration = 6200; // ms, matches hero animation choreography
-
-function drawFrame(now){
-  const t = (now - startTime);
-  const progress = Math.min(t / totalDuration, 1); // 0 -> 1 overall choreography
-  ctx.clearRect(0,0,W,H);
-
-  // Stage timings
-  const stage1 = Math.min(progress / 0.42, 1);      // expand & swirl fill screen
-  const stage2 = Math.min(Math.max((progress-0.30)/0.35,0),1); // converge to diagonal line
-  const stage3 = Math.min(Math.max((progress-0.62)/0.38,0),1); // settle / ambient loop
-
-  // origin point: starts left-center, slowly the "center of mass" can drift a touch
-  const originX = W*0.16 + W*0.05*stage1;
-  const originY = H*0.5;
-
-  const fillAmount = easeOutCubic(stage1); // 0->1 controls spread radius/opacity ramp
-  const convergeAmount = easeInOutCubic(stage2); // 0->1 pulls strands toward the diagonal
-
-  // diagonal target line endpoints (from upper-left-ish to lower-right-ish across frame)
-  const dx1 = W*0.06, dy1 = H*0.30;
-  const dx2 = W*0.98, dy2 = H*0.74;
-
-  ctx.globalCompositeOperation = 'source-over';
-
-  for(const s of strands){
-    const localT = now*0.001*s.speed + s.seed;
-    const swirl = s.baseAngle + localT*s.angleSpeed;
-
-    // ambient loop wobble for stage3
-    const ambientWobble = Math.sin(now*0.0006 + s.phase) * 10 * stage3;
-
-    // base swirling position (stage1 dominant)
-    const spread = (60 + s.radius) * fillAmount + (reduceMotion?0:ambientWobble*0.4);
-    const swirlX = originX + Math.cos(swirl) * spread * (0.5 + 0.5*Math.sin(localT*0.3));
-    const swirlY = originY + Math.sin(swirl*1.3) * spread * 0.6;
-
-    // point along the target diagonal line based on depth — gently drifts
-    // back and forth once settled, so the line never looks fully frozen
-    const alongDrift = reduceMotion ? 0 : Math.sin(now*0.00035 + s.seed) * 0.035 * stage3;
-    const along = (s.depth + Math.sin(s.seed)*0.05 + 0.5 + alongDrift) % 1;
-    const targetX = dx1 + (dx2-dx1)*along;
-    const targetY = dy1 + (dy2-dy1)*along;
-
-    let px = lerp(swirlX, targetX, convergeAmount);
-    let py = lerp(swirlY, targetY, convergeAmount);
-
-    // perpendicular shimmer once settled — the swirl/converge lerp above
-    // collapses to exactly the target point when convergeAmount hits 1, so
-    // this offset is applied afterward to keep subtle motion visible even
-    // at full convergence.
-    if(!reduceMotion && stage3 > 0){
-      const lineLen = Math.hypot(dx2-dx1, dy2-dy1) || 1;
-      const perpX = -(dy2-dy1)/lineLen;
-      const perpY = (dx2-dx1)/lineLen;
-      const perpOffset = Math.sin(now*0.0005*s.speed + s.phase*1.7) * 9 * stage3;
-      px += perpX * perpOffset;
-      py += perpY * perpOffset;
-    }
-
-    // draw a short curved strand trailing behind the point
-    const segments = 5;
-    const hue = lerp(190, 330, s.hueMix); // cyan -> violet -> coral
-    const alphaBase = (0.10 + 0.55*fillAmount) * (1 - 0.35*convergeAmount) + 0.25*stage3;
-
-    ctx.beginPath();
-    for(let k=0;k<segments;k++){
-      const kk = k/(segments-1);
-      const trailAngle = swirl - kk*0.6;
-      const trailSpread = spread * (1 - kk*0.35);
-      const tx = lerp(
-        originX + Math.cos(trailAngle) * trailSpread * (0.5+0.5*Math.sin(localT*0.3 - kk)),
-        targetX - (dx2-dx1)*0.02*kk,
-        convergeAmount
-      );
-      const ty = lerp(
-        originY + Math.sin(trailAngle*1.3) * trailSpread * 0.6,
-        targetY - (dy2-dy1)*0.02*kk,
-        convergeAmount
-      );
-      if(k===0) ctx.moveTo(tx,ty); else ctx.lineTo(tx,ty);
-    }
-    const grad = ctx.createLinearGradient(px-40,py,px+40,py);
-    grad.addColorStop(0, `hsla(${hue}, 85%, 58%, 0)`);
-    grad.addColorStop(1, `hsla(${hue}, 85%, 58%, ${Math.max(alphaBase,0)})`);
-    ctx.strokeStyle = grad;
-    ctx.lineWidth = s.width * (1 + 1.4*convergeAmount);
-    ctx.stroke();
-  }
-
-  ctx.globalCompositeOperation = 'source-over';
-
-  // The clean diagonal "hero line" itself, drawn with increasing opacity as stage2 progresses
-  if(stage2 > 0.05){
-    const lineAlpha = easeOutCubic(Math.min(stage2*1.3,1));
-    const grad2 = ctx.createLinearGradient(dx1,dy1,dx2,dy2);
-    grad2.addColorStop(0, `rgba(34,211,238,0)`);
-    grad2.addColorStop(0.5, `rgba(168,85,247,${0.85*lineAlpha})`);
-    grad2.addColorStop(1, `rgba(251,113,133,0)`);
-    ctx.strokeStyle = grad2;
-    ctx.lineWidth = 1.4;
-    ctx.beginPath();
-    ctx.moveTo(dx1,dy1);
-    ctx.lineTo(dx1 + (dx2-dx1)*lineAlpha, dy1 + (dy2-dy1)*lineAlpha);
-    ctx.stroke();
-  }
-
-  requestAnimationFrame(drawFrame);
-}
-
-function lerp(a,b,t){ return a+(b-a)*t; }
-function easeOutCubic(x){ return 1 - Math.pow(1-x,3); }
-function easeInOutCubic(x){ return x<0.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2; }
-
-if(reduceMotion){
-  // draw a single static settled frame
-  startTime = performance.now() - totalDuration;
-}
-requestAnimationFrame(drawFrame);
-
-// ---------- Wave path gentle animation ----------
-const wavePath = document.getElementById('wavePath');
-let waveT = 0;
-function animateWave(){
-  waveT += 0.006;
-  const amp = 90;
-  const y1 = 110 + Math.sin(waveT)*20;
-  const y2 = 110 + Math.sin(waveT+1.2)*20;
-  const y3 = 110 + Math.sin(waveT+2.4)*20;
-  wavePath.setAttribute('d', `M0,110 C 240,${20+Math.sin(waveT)*10} 480,${200-Math.sin(waveT)*10} 720,${y1} C 960,${20+Math.sin(waveT+1)*10} 1200,${200-Math.sin(waveT+1)*10} 1440,${y2}`);
-  if(!reduceMotion) requestAnimationFrame(animateWave);
-}
-animateWave();
-
-// ---------- LIVE DATA WIRING ----------
-// Twelve Data covers indices (NDX), commodities (gold, oil) and yields on its
-// free tier. Crypto (CoinGecko) and FX (exchangerate.host) work with NO key.
-const TWELVE_DATA_KEY = 'b21c611793ce4b91ae90a31be0e829a0';
-
-function renderChart(points){
-  const w = 600, h = 220;
-  const min = Math.min(...points), max = Math.max(...points);
-  const range = (max - min) || 1;
-  const stepX = w/(points.length-1);
-  const coords = points.map((v,i)=>[i*stepX, h - ((v-min)/range)*h*0.8 - 10]);
-  const lineD = 'M' + coords.map(p=>p.join(',')).join(' L');
-  const areaD = lineD + ` L${w},${h} L0,${h} Z`;
-  document.getElementById('linePath').setAttribute('d', lineD);
-  document.getElementById('areaPath').setAttribute('d', areaD);
-}
-
-function setRow(id, valueText, changeText, isUp){
-  const row = document.querySelector(`.stat-item[data-row="${id}"] .stat-num`);
-  if(!row) return;
-  row.textContent = changeText !== undefined ? `${valueText} · ${changeText}` : valueText;
-  row.classList.remove('up','down');
-  if(isUp === true) row.classList.add('up');
-  if(isUp === false) row.classList.add('down');
-}
-
-function fmtPct(p){
-  const sign = p > 0 ? '+' : '';
-  return `${sign}${p.toFixed(2)}%`;
-}
-
-async function fetchCrypto(){
-  try{
-    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true');
-    const json = await res.json();
-    const btc = json.bitcoin, eth = json.ethereum;
-
-    document.getElementById('mainAssetValue').innerHTML =
-      `$${btc.usd.toLocaleString(undefined,{maximumFractionDigits:0})} <span id="mainAssetChange">${fmtPct(btc.usd_24h_change)}</span>`;
-    const changeEl = document.querySelector('#mainAssetValue span');
-    changeEl.style.color = btc.usd_24h_change >= 0 ? '#4ade80' : '#f87171';
-
-    document.getElementById('ethPrice').textContent = `$${eth.usd.toLocaleString(undefined,{maximumFractionDigits:0})}`;
-
-    setRow('btc', `$${btc.usd.toLocaleString(undefined,{maximumFractionDigits:0})}`, fmtPct(btc.usd_24h_change), btc.usd_24h_change >= 0);
-    checkAlerts({ btc: btc.usd, eth: eth.usd });
-    return true;
-  }catch(e){
-    console.error('Crypto fetch failed', e);
-    return false;
-  }
-}
-
-async function fetchBtcChart(){
-  try{
-    const res = await fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1');
-    const json = await res.json();
-    const prices = json.prices.map(p => p[1]);
-    // downsample to ~48 points for a clean chart line
-    const step = Math.max(1, Math.floor(prices.length/48));
-    const sampled = prices.filter((_,i)=> i % step === 0);
-    renderChart(sampled);
-    updateTrendIndicator(sampled);
-  }catch(e){
-    console.error('BTC chart fetch failed', e);
-  }
-}
-
-// ---------- SIGNALS: trend indicator ----------
-function updateTrendIndicator(prices){
-  if(!prices || prices.length < 8) return;
-
-  const shortWindow = prices.slice(-8);   // ~last 2 hours of the sampled series
-  const longWindow = prices;              // full ~24h series
-
-  const avg = arr => arr.reduce((a,b)=>a+b,0) / arr.length;
-  const smaShort = avg(shortWindow);
-  const smaLong = avg(longWindow);
-
-  // volatility: stdev of period-over-period % returns, as a %
-  const returns = [];
-  for(let i=1;i<prices.length;i++){
-    returns.push((prices[i]-prices[i-1])/prices[i-1]);
-  }
-  const meanReturn = avg(returns);
-  const variance = avg(returns.map(r => (r-meanReturn)**2));
-  const volatilityPct = Math.sqrt(variance) * 100;
-
-  document.getElementById('smaShort').textContent = `$${smaShort.toLocaleString(undefined,{maximumFractionDigits:0})}`;
-  document.getElementById('smaLong').textContent = `$${smaLong.toLocaleString(undefined,{maximumFractionDigits:0})}`;
-  document.getElementById('volMetric').textContent = `${volatilityPct.toFixed(2)}%`;
-
-  const badge = document.getElementById('trendBadge');
-  const diffPct = (smaShort - smaLong) / smaLong;
-  let label, cls;
-  if(diffPct > 0.003){ label = 'Bullish crossover'; cls = 'bullish'; }
-  else if(diffPct < -0.003){ label = 'Bearish crossover'; cls = 'bearish'; }
-  else{ label = 'Neutral / ranging'; cls = 'neutral'; }
-  badge.className = `signal-badge ${cls}`;
-  badge.innerHTML = `<span class="sdot"></span>${label}`;
-}
-
-// ---------- SIGNALS: price alerts ----------
-const ALERTS_KEY = 'si_price_alerts';
-
-function loadAlerts(){
-  try{ return JSON.parse(localStorage.getItem(ALERTS_KEY)) || []; }
-  catch(e){ return []; }
-}
-function saveAlerts(alerts){
-  localStorage.setItem(ALERTS_KEY, JSON.stringify(alerts));
-}
-
-function renderAlerts(){
-  const list = document.getElementById('alertList');
-  const alerts = loadAlerts();
-  if(alerts.length === 0){
-    list.innerHTML = '<div class="signal-note">No alerts set yet.</div>';
-    return;
-  }
-  list.innerHTML = alerts.map((a, i) => `
-    <div class="alert-item ${a.triggered ? 'triggered' : ''}">
-      <span>${a.asset} ${a.direction} $${Number(a.price).toLocaleString()}${a.triggered ? ' — triggered' : ''}</span>
-      <button class="alert-remove" data-idx="${i}">✕</button>
-    </div>
-  `).join('');
-  list.querySelectorAll('.alert-remove').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const idx = parseInt(btn.getAttribute('data-idx'));
-      const alerts = loadAlerts();
-      alerts.splice(idx, 1);
-      saveAlerts(alerts);
-      renderAlerts();
-    });
-  });
-}
-
-document.getElementById('addAlertBtn').addEventListener('click', () => {
-  const asset = document.getElementById('alertAsset').value;
-  const direction = document.getElementById('alertDirection').value;
-  const priceInput = document.getElementById('alertPrice');
-  const price = parseFloat(priceInput.value);
-  if(!price || price <= 0){ priceInput.focus(); return; }
-
-  const alerts = loadAlerts();
-  alerts.push({ asset, direction, price, triggered: false });
-  saveAlerts(alerts);
-  priceInput.value = '';
-  renderAlerts();
-
-  if('Notification' in window && Notification.permission === 'default'){
-    Notification.requestPermission();
-  }
-});
-
-function checkAlerts(prices){
-  const alerts = loadAlerts();
-  if(alerts.length === 0) return;
-  let changed = false;
-
-  alerts.forEach(a => {
-    if(a.triggered) return;
-    const current = a.asset === 'BTC' ? prices.btc : prices.eth;
-    if(current === undefined) return;
-    const hit = a.direction === 'above' ? current >= a.price : current <= a.price;
-    if(hit){
-      a.triggered = true;
-      changed = true;
-      const msg = `${a.asset} is now ${a.direction} $${Number(a.price).toLocaleString()} (currently $${current.toLocaleString()})`;
-      if('Notification' in window && Notification.permission === 'granted'){
-        new Notification('SI price alert', { body: msg });
-      }
-    }
-  });
-
-  if(changed){
-    saveAlerts(alerts);
-    renderAlerts();
-  }
-}
-
-renderAlerts();
-
-async function fetchFX(){
-  try{
-    // Frankfurter (ECB rates) — genuinely free, no API key, no signup.
-    const res = await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR');
-    const json = await res.json();
-    const rate = json.rates.EUR;
-    const eurusd = 1/rate;
-    setRow('eurusd', eurusd.toFixed(4));
-  }catch(e){
-    console.error('FX fetch failed', e);
-    setRow('eurusd', 'unavailable');
-  }
-}
-
-async function fetchTwelveData(){
-  if(!TWELVE_DATA_KEY){
-    setRow('ndx', 'Add API key');
-    setRow('us10y', 'Add API key');
-    setRow('gold', 'Add API key');
-    setRow('oil', 'Add API key');
-    return;
-  }
-  const symbols = { ndx: 'NDX', gold: 'XAU/USD', oil: 'WTI/USD', us10y: 'US10Y' };
-  for(const [row, symbol] of Object.entries(symbols)){
-    try{
-      const res = await fetch(`https://api.twelvedata.com/quote?symbol=${encodeURIComponent(symbol)}&apikey=${TWELVE_DATA_KEY}`);
-      const json = await res.json();
-      if(json.status === 'error' || !json.close){
-        setRow(row, 'n/a');
-        continue;
-      }
-      const price = parseFloat(json.close);
-      const pct = parseFloat(json.percent_change);
-      setRow(row, price.toLocaleString(undefined,{maximumFractionDigits:2}), fmtPct(pct), pct >= 0);
-    }catch(e){
-      console.error(`Twelve Data fetch failed for ${symbol}`, e);
-      setRow(row, 'n/a');
-    }
-  }
-}
-
-function updateClock(){
-  const el = document.getElementById('liveClock');
-  if(el) el.textContent = new Date().toLocaleTimeString();
-  const wl = document.getElementById('watchlistUpdated');
-  if(wl) wl.textContent = 'updated ' + new Date().toLocaleTimeString();
-}
-
-async function refreshAllData(){
-  const statusEl = document.getElementById('dataStatus');
-  statusEl.textContent = 'Syncing…';
-  const results = await Promise.allSettled([fetchCrypto(), fetchBtcChart(), fetchFX(), fetchTwelveData()]);
-  updateClock();
-  statusEl.textContent = 'Live';
-  statusEl.style.color = '#4ade80';
-}
-
-refreshAllData();
-setInterval(fetchCrypto, 30000);      // crypto prices every 30s
-setInterval(fetchFX, 60000);          // FX every 60s
-setInterval(fetchTwelveData, 60000);  // keyed data every 60s
-setInterval(updateClock, 1000);       // clock every second
-
-// ---------- WALLET CONNECTION (injected wallet + WalletConnect) ----------
-// Get a free Project ID at https://dashboard.reown.com (takes ~2 minutes,
-// same idea as the Twelve Data key). Paste it below. Without it, WalletConnect
-// (the QR/deep-link option for regular Chrome/Safari) won't work — only
-// browsers with an actual wallet extension/app will be able to connect.
-const WALLETCONNECT_PROJECT_ID = ''; // <-- paste your Reown/WalletConnect Project ID here
-
-const walletBtn = document.getElementById('walletBtn');
-const walletLabel = document.getElementById('walletLabel');
-const walletMenu = document.getElementById('walletMenu');
-const walletAddrRow = document.getElementById('walletAddrRow');
-const copyAddrBtn = document.getElementById('copyAddrBtn');
-const disconnectBtn = document.getElementById('disconnectBtn');
-
-let currentAccount = null;
-let activeRawProvider = null; // either window.ethereum or the WalletConnect provider
-let wcProvider = null;        // cached WalletConnect provider instance
-
-function shortAddr(addr){
-  return addr.slice(0,6) + '…' + addr.slice(-4);
-}
-
-function setConnectedUI(addr){
-  currentAccount = addr;
-  walletBtn.classList.add('connected');
-  walletLabel.textContent = shortAddr(addr);
-  walletAddrRow.textContent = addr;
-  document.getElementById('walletLocked').style.display = 'none';
-  document.getElementById('walletUnlocked').style.display = 'grid';
-  loadBalances();
-  refreshAdopterBadge();
-}
-
-function setDisconnectedUI(){
-  currentAccount = null;
-  activeRawProvider = null;
-  walletBtn.classList.remove('connected');
-  walletLabel.textContent = 'Connect Wallet';
-  walletMenu.classList.remove('open');
-  document.getElementById('walletLocked').style.display = 'block';
-  document.getElementById('walletUnlocked').style.display = 'none';
-}
-
-document.getElementById('walletLockedBtn').addEventListener('click', connectWallet);
-
-function bindProviderEvents(provider){
-  provider.on && provider.on('accountsChanged', (accounts) => {
-    if(!accounts || accounts.length === 0) setDisconnectedUI();
-    else setConnectedUI(accounts[0]);
-  });
-  provider.on && provider.on('chainChanged', () => {
-    if(currentAccount) loadBalances();
-  });
-  provider.on && provider.on('disconnect', () => setDisconnectedUI());
-}
-
-async function connectInjected(){
-  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-  if(accounts && accounts.length > 0){
-    activeRawProvider = window.ethereum;
-    bindProviderEvents(window.ethereum);
-    setConnectedUI(accounts[0]);
-  }
-}
-
-async function connectWalletConnect(){
-  if(!WALLETCONNECT_PROJECT_ID){
-    alert('No wallet extension detected, and WalletConnect isn\'t configured yet on this site. Either open this page inside your wallet app\'s built-in browser, or the site owner needs to add a WalletConnect Project ID.');
-    return;
-  }
-  try{
-    const { EthereumProvider } = await import('https://esm.sh/@walletconnect/ethereum-provider@2?bundle');
-    wcProvider = await EthereumProvider.init({
-      projectId: WALLETCONNECT_PROJECT_ID,
-      optionalChains: [1, 8453, 137, 42161], // Ethereum, Base, Polygon, Arbitrum
-      showQrModal: true,
-      methods: ['eth_sendTransaction', 'personal_sign', 'eth_accounts', 'eth_requestAccounts'],
-      events: ['chainChanged', 'accountsChanged']
-    });
-    bindProviderEvents(wcProvider);
-    await wcProvider.connect(); // opens the QR / deep-link modal
-    const accounts = wcProvider.accounts;
-    if(accounts && accounts.length > 0){
-      activeRawProvider = wcProvider;
-      setConnectedUI(accounts[0]);
-    }
-  }catch(err){
-    console.error('WalletConnect connection error', err);
-  }
-}
-
-async function connectWallet(){
-  if(typeof window.ethereum !== 'undefined'){
-    try{
-      await connectInjected();
-    }catch(err){
-      if(err.code === 4001){
-        console.log('User rejected wallet connection');
-      }else{
-        console.error('Injected wallet connection error', err);
-      }
-    }
-  }else{
-    // No extension in this browser (e.g. regular mobile Chrome/Safari) —
-    // fall back to WalletConnect's QR/deep-link flow.
-    await connectWalletConnect();
-  }
-}
-
-walletBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  if(currentAccount){
-    walletMenu.classList.toggle('open');
-  }else{
-    connectWallet();
-  }
-});
-
-document.addEventListener('click', () => {
-  walletMenu.classList.remove('open');
-});
-walletMenu.addEventListener('click', (e) => e.stopPropagation());
-
-copyAddrBtn.addEventListener('click', () => {
-  if(currentAccount){
-    navigator.clipboard.writeText(currentAccount);
-    copyAddrBtn.textContent = 'Copied!';
-    setTimeout(() => { copyAddrBtn.textContent = 'Copy address'; }, 1400);
-  }
-});
-
-disconnectBtn.addEventListener('click', async () => {
-  if(wcProvider && activeRawProvider === wcProvider){
-    try{ await wcProvider.disconnect(); }catch(e){ console.error(e); }
-  }
-  // Note: injected wallets don't offer a true programmatic "disconnect" —
-  // this clears local UI state. The user can fully revoke access from their
-  // wallet extension/app's connected-sites settings.
-  setDisconnectedUI();
-});
-
-// Reconnect automatically if an injected wallet is already authorized (no popup)
-if(typeof window.ethereum !== 'undefined'){
-  window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
-    if(accounts && accounts.length > 0){
-      activeRawProvider = window.ethereum;
-      bindProviderEvents(window.ethereum);
-      setConnectedUI(accounts[0]);
-    }
-  }).catch(()=>{});
-}
-
-// ---------- BALANCES / PAYMENTS / CONTRACT CALLS (ethers.js) ----------
-const ERC20_ABI = [
-  'function balanceOf(address) view returns (uint256)',
-  'function decimals() view returns (uint8)',
-  'function symbol() view returns (string)',
-  'function transfer(address to, uint256 amount) returns (bool)'
-];
-
-// Mainnet-only token addresses. Balances/transfers for these only resolve
-// correctly when the connected wallet is on Ethereum Mainnet.
-const TOKENS = {
-  USDC: { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6 },
-  USDT: { address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', decimals: 6 },
-  DAI:  { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', decimals: 18 }
-};
-
-function getProvider(){
-  return new ethers.providers.Web3Provider(activeRawProvider || window.ethereum);
-}
-
-async function loadBalances(){
-  if(!currentAccount || typeof ethers === 'undefined') return;
-  try{
-    const provider = getProvider();
-    const network = await provider.getNetwork();
-    document.getElementById('networkLabel').textContent = `Network: ${network.name} (chainId ${network.chainId})`;
-
-    const ethBal = await provider.getBalance(currentAccount);
-    document.getElementById('balEth').textContent = parseFloat(ethers.utils.formatEther(ethBal)).toFixed(4);
-
-    for(const [sym, elId] of [['USDC','balUsdc'],['USDT','balUsdt'],['DAI','balDai']]){
-      try{
-        const t = TOKENS[sym];
-        const contract = new ethers.Contract(t.address, ERC20_ABI, provider);
-        const bal = await contract.balanceOf(currentAccount);
-        document.getElementById(elId).textContent = parseFloat(ethers.utils.formatUnits(bal, t.decimals)).toFixed(2);
-      }catch(e){
-        document.getElementById(elId).textContent = 'n/a';
-      }
-    }
-  }catch(e){
-    console.error('Balance load failed', e);
-  }
-}
-
-// --- Payment ---
-document.getElementById('payBtn').addEventListener('click', async () => {
-  const statusEl = document.getElementById('payStatus');
-  statusEl.className = 'wp-status';
-  if(!currentAccount){ statusEl.textContent = 'Connect your wallet first.'; statusEl.className='wp-status error'; return; }
-
-  const asset = document.getElementById('payAsset').value;
-  const to = document.getElementById('payTo').value.trim();
-  const amount = document.getElementById('payAmount').value.trim();
-
-  if(!ethers.utils.isAddress(to)){ statusEl.textContent = 'Enter a valid recipient address.'; statusEl.className='wp-status error'; return; }
-  if(!amount || isNaN(amount) || parseFloat(amount) <= 0){ statusEl.textContent = 'Enter a valid amount.'; statusEl.className='wp-status error'; return; }
-
-  try{
-    statusEl.textContent = 'Confirm the transaction in your wallet…';
-    const provider = getProvider();
-    const signer = provider.getSigner();
-
-    let tx;
-    if(asset === 'ETH'){
-      tx = await signer.sendTransaction({ to, value: ethers.utils.parseEther(amount) });
-    }else{
-      const t = TOKENS[asset];
-      const contract = new ethers.Contract(t.address, ERC20_ABI, signer);
-      tx = await contract.transfer(to, ethers.utils.parseUnits(amount, t.decimals));
-    }
-    statusEl.textContent = `Submitted: ${tx.hash}`;
-    statusEl.className = 'wp-status';
-    await tx.wait();
-    statusEl.textContent = `Confirmed: ${tx.hash}`;
-    statusEl.className = 'wp-status success';
-    loadBalances();
-  }catch(err){
-    console.error(err);
-    statusEl.textContent = err.reason || err.message || 'Transaction failed.';
-    statusEl.className = 'wp-status error';
-  }
-});
-
-// --- Generic contract interaction ---
-document.getElementById('contractBtn').addEventListener('click', async () => {
-  const statusEl = document.getElementById('contractStatus');
-  statusEl.className = 'wp-status';
-  if(!currentAccount){ statusEl.textContent = 'Connect your wallet first.'; statusEl.className='wp-status error'; return; }
-
-  const addr = document.getElementById('contractAddr').value.trim();
-  const fnSig = document.getElementById('contractFn').value.trim();
-  const rawArgs = document.getElementById('contractArgs').value.trim();
-  const args = rawArgs.length ? rawArgs.split(',').map(a => a.trim()) : [];
-
-  if(!ethers.utils.isAddress(addr)){ statusEl.textContent = 'Enter a valid contract address.'; statusEl.className='wp-status error'; return; }
-  if(!fnSig.startsWith('function ')){ statusEl.textContent = 'Function must be human-readable ABI, e.g. "function balanceOf(address) view returns (uint256)".'; statusEl.className='wp-status error'; return; }
-
-  try{
-    const provider = getProvider();
-    const signer = provider.getSigner();
-    const isReadOnly = /\b(view|pure)\b/.test(fnSig);
-    const contract = new ethers.Contract(addr, [fnSig], isReadOnly ? provider : signer);
-    const fnName = fnSig.split('function ')[1].split('(')[0].trim();
-
-    if(isReadOnly){
-      const result = await contract[fnName](...args);
-      statusEl.textContent = `Result: ${result.toString()}`;
-      statusEl.className = 'wp-status success';
-    }else{
-      statusEl.textContent = 'Confirm the transaction in your wallet…';
-      const tx = await contract[fnName](...args);
-      statusEl.textContent = `Submitted: ${tx.hash}`;
-      await tx.wait();
-      statusEl.textContent = `Confirmed: ${tx.hash}`;
-      statusEl.className = 'wp-status success';
-    }
-  }catch(err){
-    console.error(err);
-    statusEl.textContent = err.reason || err.message || 'Call failed.';
-    statusEl.className = 'wp-status error';
-  }
-});
-
-// ---------- WAITLIST / EARLY ADOPTER ----------
-// All tier payments go to this fixed treasury address, set by the site owner.
-const TREASURY_ADDRESS = '0xc0090FE0eD37892B24eBe02619cCC51da44A5A5c';
-
-function adopterStorageKey(addr){ return `si_tier_${addr.toLowerCase()}`; }
-
-// Real, backend-verified role check. Falls back to the old localStorage-only
-// badge (cosmetic, not verified) if PROXY_BASE_URL isn't configured yet.
-async function refreshAdopterBadge(){
-  const slot = document.getElementById('adopterBadgeSlot');
-  if(!slot) return;
-  slot.innerHTML = '';
-  if(!currentAccount) return;
-
-  let tier = null;
-
-  if(PROXY_BASE_URL){
-    try{
-      const res = await fetch(`${PROXY_BASE_URL}/api/check-role?address=${currentAccount}`);
-      const json = await res.json();
-      tier = json.tier || null;
-    }catch(e){
-      console.error('check-role fetch failed', e);
-      // fall back to local cache below rather than showing nothing
-      tier = localStorage.getItem(adopterStorageKey(currentAccount));
-    }
-  }else{
-    tier = localStorage.getItem(adopterStorageKey(currentAccount));
-  }
-
-  if(tier){
-    const label = tier === 'adopter' ? 'Early Adopter ✓' : 'Waitlisted ✓';
-    slot.innerHTML = `<span class="adopter-badge">${label}</span>`;
-  }
-}
-
-document.querySelectorAll('.tier-btn').forEach(btn => {
-  btn.addEventListener('click', async () => {
-    const card = btn.closest('.tier-card');
-    const tier = card.getAttribute('data-tier');
-    const amount = btn.getAttribute('data-amount');
-    const statusEl = card.querySelector('.tier-status');
-    statusEl.className = 'tier-status';
-
-    if(!currentAccount){
-      statusEl.textContent = 'Connect your wallet first.';
-      statusEl.className = 'tier-status error';
-      connectWallet();
-      return;
-    }
-
-    try{
-      btn.disabled = true;
-      statusEl.textContent = 'Confirm the transaction in your wallet…';
-      const provider = getProvider();
-      const signer = provider.getSigner();
-      const tx = await signer.sendTransaction({
-        to: TREASURY_ADDRESS,
-        value: ethers.utils.parseEther(amount)
-      });
-      statusEl.textContent = `Submitted: ${tx.hash}`;
-      await tx.wait();
-      statusEl.textContent = `Confirmed! Verifying…`;
-
-      // Always keep the local badge as an immediate fallback...
-      localStorage.setItem(adopterStorageKey(currentAccount), tier);
-
-      // ...but if the backend is configured, ask it to independently verify
-      // the payment on-chain and record the real role.
-      if(PROXY_BASE_URL){
-        try{
-          const res = await fetch(`${PROXY_BASE_URL}/api/verify-payment`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ txHash: tx.hash, address: currentAccount, tier })
-          });
-          const json = await res.json();
-          if(json.verified){
-            statusEl.textContent = 'Confirmed and verified! Welcome aboard.';
-            statusEl.className = 'tier-status success';
-          }else{
-            statusEl.textContent = json.error || 'Payment sent, but verification failed — contact support with your tx hash.';
-            statusEl.className = 'tier-status error';
-          }
-        }catch(e){
-          console.error('verify-payment fetch failed', e);
-          statusEl.textContent = 'Payment sent, but could not reach the verification server.';
-          statusEl.className = 'tier-status error';
-        }
-      }else{
-        statusEl.textContent = 'Confirmed! Welcome aboard.';
-        statusEl.className = 'tier-status success';
-      }
-
-      refreshAdopterBadge();
-    }catch(err){
-      console.error(err);
-      statusEl.textContent = err.reason || err.message || 'Transaction failed.';
-      statusEl.className = 'tier-status error';
-    }finally{
-      btn.disabled = false;
-    }
-  });
-});
-</script>
-
-
-<div class="sw-modal" id="swModal" role="dialog" aria-modal="true" aria-labelledby="swTitle">
-  <div class="sw-panel">
+<div class="sw-modal" id="swModal" aria-hidden="true">
+  <div class="sw-panel" role="dialog" aria-modal="true" aria-labelledby="swTitle">
     <button class="sw-close" id="swClose" aria-label="Close card details">✕</button>
     <div id="swPreview"></div>
     <h3 id="swTitle"></h3>
