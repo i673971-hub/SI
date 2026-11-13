@@ -1,0 +1,58 @@
+# SI reservation system
+
+This project includes a Vercel-ready reservation flow and admin dashboard.
+
+## Required environment variables
+
+Set these in Vercel under Project > Settings > Environment Variables.
+
+- SUPABASE_URL
+- SUPABASE_SERVICE_ROLE_KEY
+- ADMIN_PASSWORD
+- SESSION_SECRET
+- ETH_RPC_URL
+- BASE_RPC_URL
+- ETH_TREASURY
+- BASE_TREASURY
+- REQUIRED_CONFIRMATIONS (set to 2)
+
+Do not put secrets in the repo or in browser code.
+
+## Supabase table
+
+Create a table named `reservations` in Supabase:
+
+```sql
+create table public.reservations (
+  id uuid primary key,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now(),
+  chain text not null,
+  tier text not null,
+  wallet_address text not null,
+  treasury_address text not null,
+  tx_hash text,
+  amount_eth text not null,
+  amount_wei text not null,
+  status text not null default 'pending',
+  status_message text,
+  confirmations integer not null default 0
+);
+
+alter table public.reservations enable row level security;
+```
+
+Use a service-role key in the backend only. Keep the table access restricted to server-side usage.
+
+## Vercel deployment
+
+- Deploy the repo to Vercel as a Node project.
+- Keep `index.html` public for the landing page.
+- The admin dashboard is served from `/admin` and requires an authenticated session.
+- Use environment variables in Vercel, not in GitHub.
+
+## Notes
+
+- The public reservation page and the admin dashboard are only as good as the configured RPC endpoints and wallet addresses.
+- The server checks for exact native ETH transfers on Ethereum/Mainnet and Base.
+- Treat the admin password and session secret as production secrets.
