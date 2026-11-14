@@ -2,15 +2,9 @@
   "name": "si-reserve-ledger",
   "version": "1.0.0",
   "private": true,
-  "description": "SI reservation payment verification and admin dashboard for Vercel + Supabase",
+  "description": "SI static website; payment and admin API routes currently disabled",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.45.0"
-  }
+  "dependencies": {}
 }

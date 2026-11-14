@@ -1,7 +1,15 @@
-const { json, getSession, signValue } = require('../lib/server');
+function send(res, status, payload) {
+  res.writeHead(status, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store',
+    'X-Content-Type-Options': 'nosniff'
+  });
+  res.end(JSON.stringify(payload));
+}
 
 module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') return json(res, 405, { ok: false, error: 'Method not allowed.' });
-  res.setHeader('Set-Cookie', 'si_admin=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0; Secure');
-  return json(res, 200, { ok: true });
+  return send(res, 503, {
+    ok: false,
+    error: 'Reservations are temporarily disabled. Do not send funds.'
+  });
 };
