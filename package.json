@@ -1,10 +1,47 @@
-{
-  "name": "si-reserve-ledger",
-  "version": "1.0.0",
-  "private": true,
-  "description": "SI static website; payment and admin API routes currently disabled",
-  "engines": {
-    "node": ">=20"
-  },
-  "dependencies": {}
-}
+# SI reservation and admin flow
+
+This repository now contains a small, safer Vercel-compatible reservation flow that is ready for environment-based deployment.
+
+## Important safety rules
+
+- Do not commit or expose production secrets. Store them in Vercel environment variables only.
+- Payment verification is enabled only after `ADMIN_PASSWORD`, `SESSION_SECRET`, and valid chain RPC/treasury values are configured.
+- The code checks exact wallet sender, exact chain recipient, and exact native-ETH amount before marking a reservation as paid.
+- Local reservation data is stored under `/data` only as a development fallback. For persistent production deployment, keep Supabase enabled.
+
+## Required environment variables
+
+Set the following in Vercel before enabling payment flows:
+
+- `ADMIN_PASSWORD`
+- `SESSION_SECRET`
+- `ETH_RPC_URL`
+- `BASE_RPC_URL`
+- `ETH_TREASURY`
+- `BASE_TREASURY`
+- `REQUIRED_CONFIRMATIONS` (default `2`)
+- `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` (optional but recommended for persistent storage)
+
+## Routes
+
+- `GET /api/health` — health and chain readiness
+- `POST /api/reservations` — create a reservation intent
+- `POST /api/reservations/confirm` — submit a transaction hash and verify it
+- `GET /api/reservations/[id]/status?token=...` — check payment status
+- `POST /api/admin` — admin login
+- `GET /api/admin/summary` — admin summary and balances
+- `GET /api/admin/reservations` — reservation list
+- `POST /api/admin/logout` — sign out
+
+## Local development
+
+1. Install dependencies: `npm install`
+2. Create a `.env` file with the required environment variables.
+3. Run locally: `npm run dev`
+4. Open the website and test `/api/health` first.
+
+## Vercel notes
+
+- The public site is served by static HTML files.
+- `admin` and `reserve` are rewired to the static pages in `vercel.json`.
+- API endpoints are serverless and should be tested from a non-production environment before enabling live payment flows.

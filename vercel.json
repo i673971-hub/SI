@@ -2,6 +2,9 @@
   "version": 2,
   "rewrites": [
     { "source": "/admin", "destination": "/admin.html" },
-    { "source": "/reserve", "destination": "/reserve.html" }
+    { "source": "/reserve", "destination": "/reserve.html" },
+    { "source": "/api/admin", "destination": "/api/admin.js" },
+    { "source": "/api/admin/:path*", "destination": "/api/admin/:path*" },
+    { "source": "/api/reservations/:path*", "destination": "/api/reservations/:path*" }
   ]
 }
